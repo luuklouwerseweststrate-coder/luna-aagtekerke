@@ -34,6 +34,14 @@
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-overlay"></div>
+        <div class="hero-particles">
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+        </div>
         <div class="hero-content">
             <div class="hero-logo">
                 <div class="hero-logo-circle">
@@ -51,6 +59,13 @@
             </a>
         </div>
     </section>
+
+    <!-- Wave: Hero → Over -->
+    <div class="wave-divider wave-divider-hero">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,30 C200,60 400,0 600,30 C800,60 1000,0 1200,30 L1200,60 L0,60 Z"/>
+        </svg>
+    </div>
 
     <!-- Over Luna -->
     <section class="section" id="over">
@@ -106,6 +121,13 @@
             </div>
         </div>
     </section>
+
+    <!-- Wave: Over → Het Huis -->
+    <div class="wave-divider wave-divider-sand">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,20 C150,50 350,0 500,25 C650,50 850,5 1000,30 C1100,45 1150,15 1200,20 L1200,60 L0,60 Z"/>
+        </svg>
+    </div>
 
     <!-- Het Huis -->
     <section class="section section-alt" id="huis">
@@ -179,6 +201,13 @@
         </div>
     </section>
 
+    <!-- Wave: Het Huis → Omgeving -->
+    <div class="wave-divider wave-divider-cream" style="background: var(--color-sand);">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,35 C300,0 500,50 700,25 C900,0 1100,40 1200,20 L1200,60 L0,60 Z"/>
+        </svg>
+    </div>
+
     <!-- Omgeving -->
     <section class="section" id="omgeving">
         <div class="container">
@@ -228,6 +257,13 @@
             </div>
         </div>
     </section>
+
+    <!-- Wave: Omgeving → Galerij -->
+    <div class="wave-divider wave-divider-sand">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,25 C200,55 400,5 600,30 C800,55 1000,10 1200,35 L1200,60 L0,60 Z"/>
+        </svg>
+    </div>
 
     <!-- Galerij -->
     <section class="section section-alt" id="galerij">
@@ -285,6 +321,79 @@
                             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
                         </svg>
                         <span>Strand</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wave: Galerij → Testimonials -->
+    <div class="wave-divider wave-divider-cream" style="background: var(--color-sand);">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,30 C150,5 350,50 550,20 C750,0 950,45 1200,25 L1200,60 L0,60 Z"/>
+        </svg>
+    </div>
+
+    <!-- Testimonials / Ervaringen -->
+    <section class="section" id="ervaringen">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Ervaringen</span>
+                <h2 class="section-title">Wat Onze Gasten Zeggen</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="testimonials-content">
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-text">Een prachtig huisje op de perfecte locatie. De afwerking is luxe en alles is tot in detail verzorgd. We komen zeker terug!</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">JB</div>
+                            <div>
+                                <div class="testimonial-name">Jan & Britt</div>
+                                <div class="testimonial-date">Zomer 2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-text">Heerlijk tot rust gekomen. Het strand op loopafstand en 's avonds genieten op het terras. Een aanrader voor iedereen die Zeeland wil ontdekken.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">MK</div>
+                            <div>
+                                <div class="testimonial-name">Familie de Koning</div>
+                                <div class="testimonial-date">Herfst 2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-text">De perfecte plek voor een romantisch weekendje weg. Modern, schoon, en smaakvol ingericht. De communicatie was ook uitstekend.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">SL</div>
+                            <div>
+                                <div class="testimonial-name">Sophie & Lars</div>
+                                <div class="testimonial-date">Voorjaar 2025</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
