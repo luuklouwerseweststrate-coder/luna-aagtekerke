@@ -592,19 +592,19 @@ a {
 }
 
 .surrounding-image-beach {
-    background: url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&h=400&fit=crop') center/cover no-repeat;
+    background: url('images/westkapelle_vanboven.png') center/cover no-repeat;
 }
 
 .surrounding-image-village {
-    background: url('https://images.unsplash.com/photo-1622467139551-8018cfd3e071?w=600&h=400&fit=crop') center/cover no-repeat;
+    background: url('images/zoutelande_vanboven.png') center/cover no-repeat;
 }
 
 .surrounding-image-nature {
-    background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&h=400&fit=crop') center/cover no-repeat;
+    background: url('images/Domburg_vanboven.png') center/cover no-repeat;
 }
 
 .surrounding-image-city {
-    background: url('https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=600&h=400&fit=crop') center/cover no-repeat;
+    background: url('images/middelburg_afbeelding.jpg') center/cover no-repeat;
 }
 
 .surrounding-image::after {
