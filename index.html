@@ -296,7 +296,7 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-label">Reserveren</span>
-                <h2 class="section-title">Boek Uw Verblijf</h2>
+                <h2 class="section-title">Boek Uw Verblijf bij LUNA</h2>
                 <div class="section-divider"></div>
             </div>
             <div class="contact-content">
@@ -345,7 +345,10 @@
                     </div>
                 </div>
                 <div class="contact-form-wrapper">
-                    <form class="contact-form" id="bookingForm" novalidate>
+                    <!-- Formspree: aanvragen worden verstuurd naar luuklouwerse.weststrate@gmail.com -->
+                    <form class="contact-form" id="bookingForm" action="https://formspree.io/f/xaqpgaoo" method="POST" novalidate>
+                        <input type="hidden" name="_subject" value="Nieuwe boekingsaanvraag via luna-aagtekerke.nl">
+                        <input type="hidden" name="_replyto" id="replyto">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="name">Naam <span class="form-required">*</span></label>
