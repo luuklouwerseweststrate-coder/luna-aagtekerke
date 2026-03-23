@@ -3,10 +3,18 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Navigation scroll effect
+    // Navigation scroll effect + Hero parallax
     const nav = document.getElementById('nav');
+    const heroContent = document.querySelector('.hero-content');
     const handleScroll = () => {
-        nav.classList.toggle('scrolled', window.scrollY > 50);
+        const scrollY = window.scrollY;
+        nav.classList.toggle('scrolled', scrollY > 50);
+
+        // Parallax effect on hero
+        if (heroContent && scrollY < window.innerHeight) {
+            heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
+            heroContent.style.opacity = 1 - (scrollY / window.innerHeight) * 0.8;
+        }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
@@ -43,14 +51,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Add fade-in class to animated elements
-    const animatedElements = document.querySelectorAll(
-        '.feature, .amenity-card, .surrounding-card, .gallery-item, .contact-info, .contact-form-wrapper'
-    );
+    // Add varied animation classes for visual interest
+    // Features: alternate slide-left and slide-right
+    document.querySelectorAll('.feature').forEach((el, i) => {
+        el.classList.add(i % 2 === 0 ? 'slide-in-left' : 'slide-in-right');
+        el.style.transitionDelay = `${i * 0.1}s`;
+        observer.observe(el);
+    });
 
-    animatedElements.forEach((el, index) => {
+    // Amenity cards: scale in
+    document.querySelectorAll('.amenity-card').forEach((el, i) => {
+        el.classList.add('scale-in');
+        el.style.transitionDelay = `${i * 0.08}s`;
+        observer.observe(el);
+    });
+
+    // Surrounding cards: alternate sides
+    document.querySelectorAll('.surrounding-card').forEach((el, i) => {
+        el.classList.add(i % 2 === 0 ? 'slide-in-left' : 'slide-in-right');
+        el.style.transitionDelay = `${i * 0.12}s`;
+        observer.observe(el);
+    });
+
+    // Gallery items: fade in
+    document.querySelectorAll('.gallery-item').forEach((el, i) => {
         el.classList.add('fade-in');
-        el.style.transitionDelay = `${index % 4 * 0.1}s`;
+        el.style.transitionDelay = `${i * 0.08}s`;
+        observer.observe(el);
+    });
+
+    // Testimonial cards: scale in
+    document.querySelectorAll('.testimonial-card').forEach((el, i) => {
+        el.classList.add('scale-in');
+        el.style.transitionDelay = `${i * 0.15}s`;
+        observer.observe(el);
+    });
+
+    // Contact sections: slide in from sides
+    const contactInfo = document.querySelector('.contact-info');
+    const contactForm = document.querySelector('.contact-form-wrapper');
+    if (contactInfo) { contactInfo.classList.add('slide-in-left'); observer.observe(contactInfo); }
+    if (contactForm) { contactForm.classList.add('slide-in-right'); observer.observe(contactForm); }
+
+    // Section headers: fade in
+    document.querySelectorAll('.section-header').forEach(el => {
+        el.classList.add('fade-in');
         observer.observe(el);
     });
 
