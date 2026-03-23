@@ -592,19 +592,19 @@ a {
 }
 
 .surrounding-image-beach {
-    background: linear-gradient(180deg, #9EC5D4 0%, #C8DFE8 40%, #F5EDE3 70%, #E8D5C0 100%);
+    background: url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&h=400&fit=crop') center/cover no-repeat;
 }
 
 .surrounding-image-village {
-    background: linear-gradient(180deg, #B8C9D4 0%, #D4C9BA 50%, #E8D5C0 100%);
+    background: url('https://images.unsplash.com/photo-1622467139551-8018cfd3e071?w=600&h=400&fit=crop') center/cover no-repeat;
 }
 
 .surrounding-image-nature {
-    background: linear-gradient(180deg, #8FB39A 0%, #A8C5A0 40%, #C8D5B8 70%, #E8E0D0 100%);
+    background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&h=400&fit=crop') center/cover no-repeat;
 }
 
 .surrounding-image-city {
-    background: linear-gradient(180deg, #C0B8A8 0%, #D4C9BA 50%, #E8E0D8 100%);
+    background: url('https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=600&h=400&fit=crop') center/cover no-repeat;
 }
 
 .surrounding-image::after {
