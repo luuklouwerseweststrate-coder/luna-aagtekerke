@@ -213,20 +213,30 @@ function handleBookingSubmit(event) {
     const replyTo = document.getElementById('replyto');
     if (replyTo) replyTo.value = document.getElementById('email').value;
 
-    // Send via Formspree
+    // Send via Formspree (JSON format)
     const formData = new FormData(form);
+    const jsonData = {};
+    formData.forEach((value, key) => { jsonData[key] = value; });
+
+    console.log('Formspree: versturen naar', form.action, jsonData);
 
     fetch(form.action, {
         method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
+        body: JSON.stringify(jsonData),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     })
     .then(response => {
+        console.log('Formspree response status:', response.status);
         if (response.ok) {
+            console.log('Formspree: succesvol verzonden!');
             form.style.display = 'none';
             document.getElementById('formSuccess').style.display = 'block';
         } else {
             return response.json().then(data => {
+                console.error('Formspree error:', data);
                 throw new Error(data.error || 'Er is iets misgegaan bij het verzenden.');
             });
         }
@@ -244,6 +254,7 @@ function handleBookingSubmit(event) {
             errorDiv.className = 'form-submit-error';
             submitBtn.parentNode.insertBefore(errorDiv, submitBtn.nextSibling);
         }
+        console.error('Formspree fetch error:', error);
         errorDiv.textContent = 'Er is iets misgegaan bij het verzenden. Probeer het opnieuw of neem contact op via info@luna-aagtekerke.nl.';
         errorDiv.style.display = 'block';
 
