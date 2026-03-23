@@ -345,7 +345,10 @@
                     </div>
                 </div>
                 <div class="contact-form-wrapper">
-                    <form class="contact-form" id="bookingForm" novalidate>
+                    <!-- FORMSPREE SETUP: Vervang YOUR_FORM_ID door je Formspree ID (zie instructies onderaan) -->
+                    <form class="contact-form" id="bookingForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+                        <input type="hidden" name="_subject" value="Nieuwe boekingsaanvraag via luna-aagtekerke.nl">
+                        <input type="hidden" name="_replyto" id="replyto">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="name">Naam <span class="form-required">*</span></label>

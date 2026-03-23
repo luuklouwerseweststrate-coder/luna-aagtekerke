@@ -209,11 +209,46 @@ function handleBookingSubmit(event) {
     btnText.style.display = 'none';
     btnLoading.style.display = 'inline-flex';
 
-    // Simulate sending (replace with actual backend call later)
-    setTimeout(() => {
-        form.style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
-    }, 1200);
+    // Set reply-to field so you can reply directly to the guest
+    const replyTo = document.getElementById('replyto');
+    if (replyTo) replyTo.value = document.getElementById('email').value;
+
+    // Send via Formspree
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+        if (response.ok) {
+            form.style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Er is iets misgegaan bij het verzenden.');
+            });
+        }
+    })
+    .catch(error => {
+        // Show error message
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+
+        let errorDiv = document.getElementById('formError');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.id = 'formError';
+            errorDiv.className = 'form-submit-error';
+            submitBtn.parentNode.insertBefore(errorDiv, submitBtn.nextSibling);
+        }
+        errorDiv.textContent = 'Er is iets misgegaan bij het verzenden. Probeer het opnieuw of neem contact op via info@luna-aagtekerke.nl.';
+        errorDiv.style.display = 'block';
+
+        setTimeout(() => { errorDiv.style.display = 'none'; }, 8000);
+    });
 }
 
 function resetBookingForm() {

@@ -894,6 +894,18 @@ a {
     color: var(--color-white);
 }
 
+.form-submit-error {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #FDF2F0;
+    border: 1px solid #E8C5C0;
+    border-radius: 4px;
+    color: #9B4D42;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
 /* ===== Footer ===== */
 .footer {
     background: var(--color-text);
