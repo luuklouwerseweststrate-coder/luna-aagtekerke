@@ -301,7 +301,7 @@
             </div>
             <div class="contact-content">
                 <div class="contact-info">
-                    <p class="contact-intro">Wij verwelkomen u graag in Luna. Neem contact met ons op voor beschikbaarheid en reserveringen.</p>
+                    <p class="contact-intro">Heeft u interesse in een verblijf bij LUNA? Vul vrijblijvend het formulier in en wij nemen persoonlijk contact met u op. Geen verplichtingen — wij beantwoorden graag al uw vragen over beschikbaarheid en prijzen.</p>
                     <div class="contact-details">
                         <div class="contact-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
@@ -322,45 +322,99 @@
                             <span>Aagtekerke, Zeeland</span>
                         </div>
                     </div>
+                    <div class="contact-expectations">
+                        <h3>Wat kunt u verwachten?</h3>
+                        <ul>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Reactie binnen 24 uur</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Informatie over beschikbaarheid en prijzen</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Persoonlijk contact, geen geautomatiseerde berichten</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Bij akkoord ontvangt u een bevestiging</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <form class="contact-form" onsubmit="handleSubmit(event)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Naam</label>
-                            <input type="text" id="name" name="name" required placeholder="Uw naam">
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="bookingForm" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Naam <span class="form-required">*</span></label>
+                                <input type="text" id="name" name="name" required placeholder="Uw volledige naam" minlength="2" autocomplete="name">
+                                <span class="form-error-msg" id="name-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-mail <span class="form-required">*</span></label>
+                                <input type="email" id="email" name="email" required placeholder="Uw e-mailadres" autocomplete="email">
+                                <span class="form-error-msg" id="email-error"></span>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" required placeholder="Uw e-mailadres">
+                            <label for="phone">Telefoon <span class="form-optional">(optioneel)</span></label>
+                            <input type="tel" id="phone" name="phone" placeholder="Uw telefoonnummer" autocomplete="tel">
+                            <span class="form-error-msg" id="phone-error"></span>
                         </div>
-                    </div>
-                    <div class="form-row">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkin">Gewenste aankomst <span class="form-required">*</span></label>
+                                <input type="date" id="checkin" name="checkin" required>
+                                <span class="form-error-msg" id="checkin-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkout">Gewenste vertrek <span class="form-required">*</span></label>
+                                <input type="date" id="checkout" name="checkout" required>
+                                <span class="form-error-msg" id="checkout-error"></span>
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <label for="checkin">Aankomst</label>
-                            <input type="date" id="checkin" name="checkin" required>
+                            <label for="guests">Aantal gasten <span class="form-required">*</span></label>
+                            <select id="guests" name="guests" required>
+                                <option value="1">1 persoon</option>
+                                <option value="2" selected>2 personen</option>
+                            </select>
+                            <span class="form-error-msg" id="guests-error"></span>
                         </div>
                         <div class="form-group">
-                            <label for="checkout">Vertrek</label>
-                            <input type="date" id="checkout" name="checkout" required>
+                            <label for="message">Bericht of bijzonderheden</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Heeft u vragen over het huisje, de omgeving, of speciale wensen? Laat het ons weten."></textarea>
                         </div>
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span class="btn-text">Vrijblijvend Beschikbaarheid Aanvragen</span>
+                            <span class="btn-loading" style="display:none;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg>
+                                Verzenden...
+                            </span>
+                        </button>
+                        <p class="form-privacy">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            Uw gegevens worden uitsluitend gebruikt om uw aanvraag te verwerken. Wij delen uw informatie niet met derden.
+                        </p>
+                    </form>
+                    <div class="form-success-message" id="formSuccess" style="display:none;">
+                        <div class="success-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
+                                <circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/>
+                            </svg>
+                        </div>
+                        <h3>Uw aanvraag is verzonden</h3>
+                        <p>Bedankt voor uw interesse in LUNA. Wij nemen zo snel mogelijk, en uiterlijk binnen 24 uur, persoonlijk contact met u op.</p>
+                        <ul class="success-expectations">
+                            <li>U ontvangt een bevestiging per e-mail</li>
+                            <li>Wij informeren u over beschikbaarheid en prijzen</li>
+                            <li>Geen automatische betalingen — pas na uw akkoord</li>
+                        </ul>
+                        <button type="button" class="btn-new-request" onclick="resetBookingForm()">Nieuwe aanvraag indienen</button>
                     </div>
-                    <div class="form-group">
-                        <label for="guests">Aantal gasten</label>
-                        <select id="guests" name="guests">
-                            <option value="1">1 persoon</option>
-                            <option value="2" selected>2 personen</option>
-                            <option value="3">3 personen</option>
-                            <option value="4">4 personen</option>
-                            <option value="5">5 personen</option>
-                            <option value="6">6 personen</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Bericht</label>
-                        <textarea id="message" name="message" rows="4" placeholder="Heeft u speciale wensen of vragen?"></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit">Beschikbaarheid Aanvragen</button>
-                </form>
+                </div>
             </div>
         </div>
     </section>

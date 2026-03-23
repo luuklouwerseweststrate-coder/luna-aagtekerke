@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add fade-in class to animated elements
     const animatedElements = document.querySelectorAll(
-        '.feature, .amenity-card, .surrounding-card, .gallery-item, .contact-info, .contact-form'
+        '.feature, .amenity-card, .surrounding-card, .gallery-item, .contact-info, .contact-form-wrapper'
     );
 
     animatedElements.forEach((el, index) => {
@@ -68,19 +68,175 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Form submission handler
-function handleSubmit(event) {
+// ===== Form Validation & Submission =====
+
+// Attach form handler after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('bookingForm');
+    if (form) {
+        form.addEventListener('submit', handleBookingSubmit);
+
+        // Set min date for check-in to today
+        const today = new Date().toISOString().split('T')[0];
+        const checkinInput = document.getElementById('checkin');
+        const checkoutInput = document.getElementById('checkout');
+        if (checkinInput) checkinInput.setAttribute('min', today);
+        if (checkoutInput) checkoutInput.setAttribute('min', today);
+
+        // Update checkout min when checkin changes
+        if (checkinInput && checkoutInput) {
+            checkinInput.addEventListener('change', () => {
+                if (checkinInput.value) {
+                    const nextDay = new Date(checkinInput.value);
+                    nextDay.setDate(nextDay.getDate() + 1);
+                    checkoutInput.setAttribute('min', nextDay.toISOString().split('T')[0]);
+                    if (checkoutInput.value && checkoutInput.value <= checkinInput.value) {
+                        checkoutInput.value = '';
+                    }
+                }
+            });
+        }
+
+        // Clear errors on input
+        form.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('input', () => clearFieldError(field.id));
+            field.addEventListener('change', () => clearFieldError(field.id));
+        });
+    }
+});
+
+function showFieldError(fieldId, message) {
+    const group = document.getElementById(fieldId)?.closest('.form-group');
+    const errorEl = document.getElementById(fieldId + '-error');
+    if (group) group.classList.add('has-error');
+    if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+    }
+}
+
+function clearFieldError(fieldId) {
+    const group = document.getElementById(fieldId)?.closest('.form-group');
+    const errorEl = document.getElementById(fieldId + '-error');
+    if (group) group.classList.remove('has-error');
+    if (errorEl) {
+        errorEl.textContent = '';
+        errorEl.style.display = 'none';
+    }
+}
+
+function validateBookingForm() {
+    let isValid = true;
+    const fields = ['name', 'email', 'phone', 'checkin', 'checkout'];
+    fields.forEach(id => clearFieldError(id));
+
+    // Name
+    const name = document.getElementById('name').value.trim();
+    if (!name) {
+        showFieldError('name', 'Vul uw naam in.');
+        isValid = false;
+    } else if (name.length < 2) {
+        showFieldError('name', 'Uw naam moet minimaal 2 tekens bevatten.');
+        isValid = false;
+    }
+
+    // Email
+    const email = document.getElementById('email').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+        showFieldError('email', 'Vul uw e-mailadres in.');
+        isValid = false;
+    } else if (!emailRegex.test(email)) {
+        showFieldError('email', 'Vul een geldig e-mailadres in.');
+        isValid = false;
+    }
+
+    // Phone (optional, but validate format if filled)
+    const phone = document.getElementById('phone').value.trim();
+    if (phone) {
+        const phoneRegex = /^[+]?[\d\s\-()]{7,}$/;
+        if (!phoneRegex.test(phone)) {
+            showFieldError('phone', 'Vul een geldig telefoonnummer in.');
+            isValid = false;
+        }
+    }
+
+    // Check-in date
+    const checkin = document.getElementById('checkin').value;
+    const today = new Date().toISOString().split('T')[0];
+    if (!checkin) {
+        showFieldError('checkin', 'Selecteer een aankomstdatum.');
+        isValid = false;
+    } else if (checkin < today) {
+        showFieldError('checkin', 'De aankomstdatum moet vandaag of later zijn.');
+        isValid = false;
+    }
+
+    // Check-out date
+    const checkout = document.getElementById('checkout').value;
+    if (!checkout) {
+        showFieldError('checkout', 'Selecteer een vertrekdatum.');
+        isValid = false;
+    } else if (checkin && checkout <= checkin) {
+        showFieldError('checkout', 'De vertrekdatum moet na de aankomstdatum liggen.');
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+function handleBookingSubmit(event) {
     event.preventDefault();
+
+    if (!validateBookingForm()) {
+        // Scroll to first error
+        const firstError = document.querySelector('.form-group.has-error');
+        if (firstError) {
+            const offset = 100;
+            const top = firstError.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+        return;
+    }
+
     const form = event.target;
-    const button = form.querySelector('.btn-submit');
-    const originalText = button.textContent;
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
 
-    button.textContent = 'Verstuurd!';
-    button.style.background = '#6A9FB5';
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline-flex';
 
+    // Simulate sending (replace with actual backend call later)
     setTimeout(() => {
-        button.textContent = originalText;
-        button.style.background = '';
-        form.reset();
-    }, 3000);
+        form.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+    }, 1200);
+}
+
+function resetBookingForm() {
+    const form = document.getElementById('bookingForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+
+    form.reset();
+    form.style.display = 'block';
+    document.getElementById('formSuccess').style.display = 'none';
+    submitBtn.disabled = false;
+    btnText.style.display = 'inline';
+    btnLoading.style.display = 'none';
+
+    // Clear all errors
+    form.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+    form.querySelectorAll('.form-error-msg').forEach(e => { e.textContent = ''; e.style.display = 'none'; });
+
+    // Scroll to form
+    const section = document.getElementById('contact');
+    if (section) {
+        const top = section.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+    }
 }
