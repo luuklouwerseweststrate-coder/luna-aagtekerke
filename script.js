@@ -201,15 +201,17 @@
             checkoutInput.value = '';
         }
 
-        // Scroll to form if both dates selected
+        // Scroll directly to the date fields in the form
         if (start && end) {
             setTimeout(() => {
-                const form = document.querySelector('.contact-content');
-                if (form) {
-                    const top = form.getBoundingClientRect().top + window.pageYOffset - 100;
-                    window.scrollTo({ top, behavior: 'smooth' });
+                const checkinField = document.getElementById('checkin');
+                if (checkinField) {
+                    const fieldGroup = checkinField.closest('.form-row') || checkinField.closest('.form-group');
+                    if (fieldGroup) {
+                        fieldGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
                 }
-            }, 300);
+            }, 150);
         }
     }
 
