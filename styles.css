@@ -701,6 +701,204 @@ a {
     opacity: 1;
 }
 
+/* ===== Beschikbaarheidskalender ===== */
+.calendar-wrapper {
+    background: var(--color-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    padding: 40px;
+    margin-bottom: 48px;
+    position: relative;
+}
+
+.calendar-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.calendar-title {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: 6px;
+}
+
+.calendar-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+}
+
+.calendar-nav {
+    position: absolute;
+    top: 44px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.calendar-nav-btn {
+    pointer-events: all;
+    background: var(--color-cream);
+    border: 1px solid var(--color-sand-dark);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-text-light);
+    transition: var(--transition);
+}
+
+.calendar-nav-btn:hover {
+    background: var(--color-sand);
+    color: var(--color-text);
+}
+
+.calendar-months {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.calendar-month {
+    min-width: 0;
+}
+
+.calendar-month-name {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--color-text);
+    text-transform: capitalize;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    padding: 4px 0 8px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--color-text);
+    position: relative;
+    font-weight: 300;
+}
+
+.calendar-day:hover:not(.day-booked):not(.day-empty):not(.day-past) {
+    background: var(--color-ocean-light);
+    color: var(--color-text);
+}
+
+.calendar-day.day-empty {
+    cursor: default;
+}
+
+.calendar-day.day-past {
+    color: var(--color-sand-dark);
+    cursor: default;
+}
+
+.calendar-day.day-today {
+    font-weight: 700;
+    color: var(--color-ocean-dark);
+}
+
+.calendar-day.day-available {
+    background: rgba(158, 197, 212, 0.15);
+}
+
+.calendar-day.day-booked {
+    background: var(--color-sand);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+    text-decoration: line-through;
+    text-decoration-color: var(--color-sand-dark);
+}
+
+.calendar-day.day-selected {
+    background: var(--color-ocean);
+    color: var(--color-white);
+    font-weight: 400;
+}
+
+.calendar-day.day-in-range {
+    background: var(--color-ocean-light);
+    color: var(--color-text);
+    border-radius: 4px;
+}
+
+.calendar-day.day-selected.day-range-start {
+    border-radius: 50% 4px 4px 50%;
+}
+
+.calendar-day.day-selected.day-range-end {
+    border-radius: 4px 50% 50% 4px;
+}
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.legend-available {
+    background: rgba(158, 197, 212, 0.3);
+    border: 1px solid var(--color-ocean-light);
+}
+
+.legend-booked {
+    background: var(--color-sand);
+    border: 1px solid var(--color-sand-dark);
+}
+
+.legend-selected {
+    background: var(--color-ocean);
+    border: 1px solid var(--color-ocean-dark);
+}
+
 /* ===== Contact ===== */
 .contact-content {
     display: grid;
@@ -1252,6 +1450,24 @@ a {
 }
 
 @media (max-width: 768px) {
+    .calendar-months {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .calendar-wrapper {
+        padding: 24px 16px;
+    }
+
+    .calendar-nav {
+        left: 16px;
+        right: 16px;
+    }
+
+    .calendar-day {
+        font-size: 0.8rem;
+    }
+
     .nav-toggle {
         display: flex;
     }

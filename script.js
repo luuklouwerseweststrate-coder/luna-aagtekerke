@@ -1,6 +1,260 @@
 // LUNA - Vakantiehuisje Aagtekerke
 // Smooth interactions and animations
 
+// ===== Beschikbaarheidskalender =====
+
+(function() {
+    const MONTH_NAMES = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+    const DAY_HEADERS = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
+
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let bookedRanges = [];
+    let selectionStart = null;
+    let selectionEnd = null;
+    let useMockData = true;
+
+    // Generate mock bookings (same logic as API fallback, so calendar works without server)
+    function generateMockBookings() {
+        const now = new Date();
+        const ranges = [
+            { offsetDays: 3, duration: 4 },
+            { offsetDays: 14, duration: 7 },
+            { offsetDays: 30, duration: 3 },
+            { offsetDays: 42, duration: 5 },
+            { offsetDays: 58, duration: 7 },
+            { offsetDays: 75, duration: 4 },
+            { offsetDays: 90, duration: 6 },
+            { offsetDays: 105, duration: 3 },
+        ];
+        return ranges.map(r => {
+            const start = new Date(now);
+            start.setDate(start.getDate() + r.offsetDays);
+            const end = new Date(start);
+            end.setDate(end.getDate() + r.duration);
+            return {
+                start: formatDateStr(start),
+                end: formatDateStr(end)
+            };
+        });
+    }
+
+    function formatDateStr(d) {
+        return d.toISOString().split('T')[0];
+    }
+
+    function isDateBooked(dateStr) {
+        return bookedRanges.some(r => dateStr >= r.start && dateStr < r.end);
+    }
+
+    function isDateInSelection(dateStr) {
+        if (!selectionStart || !selectionEnd) return false;
+        return dateStr >= selectionStart && dateStr <= selectionEnd;
+    }
+
+    function buildMonth(year, month, container) {
+        const frag = document.createDocumentFragment();
+
+        const title = document.createElement('div');
+        title.className = 'calendar-month-name';
+        title.textContent = MONTH_NAMES[month] + ' ' + year;
+        frag.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'calendar-grid';
+
+        // Day headers
+        DAY_HEADERS.forEach(d => {
+            const hdr = document.createElement('div');
+            hdr.className = 'calendar-day-header';
+            hdr.textContent = d;
+            grid.appendChild(hdr);
+        });
+
+        const firstDay = new Date(year, month, 1);
+        // Monday = 0, Sunday = 6
+        let startDay = firstDay.getDay() - 1;
+        if (startDay < 0) startDay = 6;
+
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const todayStr = formatDateStr(today);
+
+        // Empty cells before first day
+        for (let i = 0; i < startDay; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'calendar-day day-empty';
+            grid.appendChild(empty);
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const date = new Date(year, month, d);
+            const dateStr = formatDateStr(date);
+            const cell = document.createElement('div');
+            cell.className = 'calendar-day';
+            cell.textContent = d;
+            cell.dataset.date = dateStr;
+
+            if (date < today) {
+                cell.classList.add('day-past');
+            } else if (isDateBooked(dateStr)) {
+                cell.classList.add('day-booked');
+            } else {
+                cell.classList.add('day-available');
+                cell.addEventListener('click', () => handleDateClick(dateStr));
+            }
+
+            if (dateStr === todayStr) {
+                cell.classList.add('day-today');
+            }
+
+            // Selection highlighting
+            if (selectionStart === dateStr || selectionEnd === dateStr) {
+                cell.classList.add('day-selected');
+                if (selectionStart === dateStr && selectionEnd) cell.classList.add('day-range-start');
+                if (selectionEnd === dateStr && selectionStart) cell.classList.add('day-range-end');
+            } else if (isDateInSelection(dateStr) && !isDateBooked(dateStr)) {
+                cell.classList.add('day-in-range');
+            }
+
+            grid.appendChild(cell);
+        }
+
+        frag.appendChild(grid);
+        container.appendChild(frag);
+    }
+
+    function render() {
+        const container = document.getElementById('calendarMonths');
+        if (!container) return;
+        container.innerHTML = '';
+
+        // Month 1
+        const m1 = document.createElement('div');
+        m1.className = 'calendar-month';
+        buildMonth(currentYear, currentMonth, m1);
+        container.appendChild(m1);
+
+        // Month 2
+        let m2Year = currentYear;
+        let m2Month = currentMonth + 1;
+        if (m2Month > 11) { m2Month = 0; m2Year++; }
+        const m2 = document.createElement('div');
+        m2.className = 'calendar-month';
+        buildMonth(m2Year, m2Month, m2);
+        container.appendChild(m2);
+    }
+
+    function handleDateClick(dateStr) {
+        if (!selectionStart || (selectionStart && selectionEnd)) {
+            // Start new selection
+            selectionStart = dateStr;
+            selectionEnd = null;
+            updateFormDates(dateStr, null);
+        } else {
+            // Complete selection
+            if (dateStr < selectionStart) {
+                selectionEnd = selectionStart;
+                selectionStart = dateStr;
+            } else if (dateStr === selectionStart) {
+                // Clicking same date deselects
+                selectionStart = null;
+                selectionEnd = null;
+                updateFormDates(null, null);
+                render();
+                return;
+            } else {
+                selectionEnd = dateStr;
+            }
+
+            // Check if any booked date falls within selection
+            const hasBookedInRange = bookedRanges.some(r => {
+                return r.start < selectionEnd && r.end > selectionStart;
+            });
+
+            if (hasBookedInRange) {
+                // Reset: can't select range with booked dates
+                selectionStart = dateStr;
+                selectionEnd = null;
+                updateFormDates(dateStr, null);
+            } else {
+                updateFormDates(selectionStart, selectionEnd);
+            }
+        }
+        render();
+    }
+
+    function updateFormDates(start, end) {
+        const checkinInput = document.getElementById('checkin');
+        const checkoutInput = document.getElementById('checkout');
+        if (checkinInput && start) {
+            checkinInput.value = start;
+            checkinInput.dispatchEvent(new Event('change'));
+        } else if (checkinInput && !start) {
+            checkinInput.value = '';
+        }
+        if (checkoutInput && end) {
+            checkoutInput.value = end;
+            checkoutInput.dispatchEvent(new Event('change'));
+        } else if (checkoutInput && !end) {
+            checkoutInput.value = '';
+        }
+
+        // Scroll to form if both dates selected
+        if (start && end) {
+            setTimeout(() => {
+                const form = document.querySelector('.contact-content');
+                if (form) {
+                    const top = form.getBoundingClientRect().top + window.pageYOffset - 100;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            }, 300);
+        }
+    }
+
+    function navigateMonth(delta) {
+        currentMonth += delta;
+        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+
+        // Don't go before current month
+        const now = new Date();
+        if (currentYear < now.getFullYear() || (currentYear === now.getFullYear() && currentMonth < now.getMonth())) {
+            currentMonth = now.getMonth();
+            currentYear = now.getFullYear();
+        }
+        render();
+    }
+
+    async function fetchBookings() {
+        try {
+            const res = await fetch('/api/calendar');
+            if (res.ok) {
+                const data = await res.json();
+                bookedRanges = data.booked || [];
+                useMockData = data.mock || false;
+                render();
+                return;
+            }
+        } catch (e) {
+            // API not available (e.g. local dev without Vercel), use mock data
+        }
+        bookedRanges = generateMockBookings();
+        useMockData = true;
+        render();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const prevBtn = document.getElementById('calPrev');
+        const nextBtn = document.getElementById('calNext');
+        if (prevBtn) prevBtn.addEventListener('click', () => navigateMonth(-1));
+        if (nextBtn) nextBtn.addEventListener('click', () => navigateMonth(1));
+
+        fetchBookings();
+    });
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Navigation scroll effect + Hero parallax
