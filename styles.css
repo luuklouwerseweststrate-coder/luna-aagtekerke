@@ -834,11 +834,11 @@ a {
 }
 
 .calendar-day.day-booked {
-    background: var(--color-sand);
-    color: var(--color-text-muted);
+    background: rgba(200, 130, 130, 0.18);
+    color: #b08a8a;
     cursor: not-allowed;
     text-decoration: line-through;
-    text-decoration-color: var(--color-sand-dark);
+    text-decoration-color: rgba(180, 120, 120, 0.45);
 }
 
 .calendar-day.day-selected {
@@ -890,8 +890,8 @@ a {
 }
 
 .legend-booked {
-    background: var(--color-sand);
-    border: 1px solid var(--color-sand-dark);
+    background: rgba(200, 130, 130, 0.25);
+    border: 1px solid rgba(180, 120, 120, 0.4);
 }
 
 .legend-selected {
