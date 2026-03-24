@@ -588,15 +588,75 @@ function resetBookingForm() {
     }
 }
 
+// ===== Gallery Carousel =====
+(function() {
+    const track = document.querySelector('.gallery-track');
+    const items = document.querySelectorAll('.gallery-item');
+    const prevBtn = document.querySelector('.gallery-nav-prev');
+    const nextBtn = document.querySelector('.gallery-nav-next');
+    const dotsContainer = document.getElementById('galleryDots');
+    if (!track || items.length === 0) return;
+
+    let currentSlide = 0;
+    let startX = 0;
+    let isDragging = false;
+
+    // Create dots
+    items.forEach(function(_, i) {
+        var dot = document.createElement('button');
+        dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Ga naar foto ' + (i + 1));
+        dot.addEventListener('click', function() { goToSlide(i); });
+        dotsContainer.appendChild(dot);
+    });
+
+    function goToSlide(index) {
+        currentSlide = Math.max(0, Math.min(index, items.length - 1));
+        track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+        updateDots();
+    }
+
+    function updateDots() {
+        var dots = dotsContainer.querySelectorAll('.gallery-dot');
+        dots.forEach(function(d, i) {
+            d.classList.toggle('active', i === currentSlide);
+        });
+    }
+
+    prevBtn.addEventListener('click', function() {
+        goToSlide(currentSlide > 0 ? currentSlide - 1 : items.length - 1);
+    });
+
+    nextBtn.addEventListener('click', function() {
+        goToSlide(currentSlide < items.length - 1 ? currentSlide + 1 : 0);
+    });
+
+    // Touch/swipe support
+    track.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    }, { passive: true });
+
+    track.addEventListener('touchend', function(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        var diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) goToSlide(currentSlide < items.length - 1 ? currentSlide + 1 : 0);
+            else goToSlide(currentSlide > 0 ? currentSlide - 1 : items.length - 1);
+        }
+    }, { passive: true });
+})();
+
 // ===== Lightbox =====
 (function() {
-    const lightbox = document.getElementById('lightbox');
+    var lightbox = document.getElementById('lightbox');
     if (!lightbox) return;
 
-    const img = document.getElementById('lightboxImg');
-    const counter = document.getElementById('lightboxCounter');
-    const images = Array.from(document.querySelectorAll('.gallery-item img'));
-    let currentIndex = 0;
+    var img = document.getElementById('lightboxImg');
+    var counter = document.getElementById('lightboxCounter');
+    var images = Array.from(document.querySelectorAll('.gallery-item img'));
+    var currentIndex = 0;
 
     function openLightbox(index) {
         currentIndex = index;
@@ -613,10 +673,8 @@ function resetBookingForm() {
     }
 
     function updateLightbox() {
-        const src = images[currentIndex].src;
-        const alt = images[currentIndex].alt;
-        img.src = src;
-        img.alt = alt;
+        img.src = images[currentIndex].src;
+        img.alt = images[currentIndex].alt;
         counter.textContent = (currentIndex + 1) + ' / ' + images.length;
     }
 
@@ -625,17 +683,15 @@ function resetBookingForm() {
         updateLightbox();
     }
 
-    // Click handlers on gallery images
+    // Double-click or long-press on gallery item opens lightbox
     images.forEach(function(image, index) {
-        image.closest('.gallery-item').addEventListener('click', function() {
+        image.closest('.gallery-item').addEventListener('dblclick', function() {
             openLightbox(index);
         });
     });
 
-    // Close button
     lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
 
-    // Prev / Next
     lightbox.querySelector('.lightbox-prev').addEventListener('click', function(e) {
         e.stopPropagation();
         navigate(-1);
@@ -645,12 +701,10 @@ function resetBookingForm() {
         navigate(1);
     });
 
-    // Click on backdrop closes
     lightbox.addEventListener('click', function(e) {
         if (e.target === lightbox) closeLightbox();
     });
 
-    // Keyboard navigation
     document.addEventListener('keydown', function(e) {
         if (!lightbox.classList.contains('active')) return;
         if (e.key === 'Escape') closeLightbox();

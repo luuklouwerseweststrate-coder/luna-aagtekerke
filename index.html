@@ -310,39 +310,48 @@
                 <h2 class="section-title">Galerij</h2>
             </div>
             <p class="gallery-note">Sfeerimpressies van Luna en de omgeving</p>
-            <div class="gallery-grid">
-                <div class="gallery-item gallery-item-large">
-                    <img src="images/keuken.png" alt="Keuken van vakantiehuisje Luna in Aagtekerke" loading="lazy">
-                    <span class="gallery-label">Keuken</span>
+            <div class="gallery-carousel">
+                <button class="gallery-nav gallery-nav-prev" aria-label="Vorige foto">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button class="gallery-nav gallery-nav-next" aria-label="Volgende foto">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+                <div class="gallery-track">
+                    <div class="gallery-item">
+                        <img src="images/keuken.png" alt="Keuken van vakantiehuisje Luna in Aagtekerke" loading="lazy">
+                        <span class="gallery-label">Keuken</span>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/slaapkamer_1.png" alt="Slaapkamer vakantiehuisje Aagtekerke" loading="lazy">
+                        <span class="gallery-label">Slaapkamer</span>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/eetgedeelte_1.png" alt="Eetgedeelte vakantiehuisje Luna Aagtekerke" loading="lazy">
+                        <span class="gallery-label">Eetgedeelte</span>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/badkamer_1.png" alt="Badkamer vakantiehuisje Aagtekerke Zeeland" loading="lazy">
+                        <span class="gallery-label">Badkamer</span>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/keuken_2.png" alt="Keuken vakantiehuisje Aagtekerke" loading="lazy">
+                        <span class="gallery-label">Keuken</span>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/badkamer_2.png" alt="Badkamer luxe vakantiehuisje Aagtekerke" loading="lazy">
+                        <span class="gallery-label">Badkamer</span>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/keuken_3.png" alt="Volledig uitgeruste keuken vakantiehuisje Luna" loading="lazy">
+                        <span class="gallery-label">Keuken</span>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/badkamer_3.png" alt="Badkamer interieur vakantiehuisje Aagtekerke" loading="lazy">
+                        <span class="gallery-label">Badkamer</span>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/slaapkamer_1.png" alt="Slaapkamer vakantiehuisje Aagtekerke" loading="lazy">
-                    <span class="gallery-label">Slaapkamer</span>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/eetgedeelte_1.png" alt="Eetgedeelte vakantiehuisje Luna Aagtekerke" loading="lazy">
-                    <span class="gallery-label">Eetgedeelte</span>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/badkamer_1.png" alt="Badkamer vakantiehuisje Aagtekerke Zeeland" loading="lazy">
-                    <span class="gallery-label">Badkamer</span>
-                </div>
-                <div class="gallery-item gallery-item-large">
-                    <img src="images/keuken_2.png" alt="Keuken vakantiehuisje Aagtekerke" loading="lazy">
-                    <span class="gallery-label">Keuken</span>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/badkamer_2.png" alt="Badkamer luxe vakantiehuisje Aagtekerke" loading="lazy">
-                    <span class="gallery-label">Badkamer</span>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/keuken_3.png" alt="Volledig uitgeruste keuken vakantiehuisje Luna" loading="lazy">
-                    <span class="gallery-label">Keuken</span>
-                </div>
-                <div class="gallery-item gallery-item-large">
-                    <img src="images/badkamer_3.png" alt="Badkamer interieur vakantiehuisje Aagtekerke" loading="lazy">
-                    <span class="gallery-label">Badkamer</span>
-                </div>
+                <div class="gallery-dots" id="galleryDots"></div>
             </div>
         </div>
     </section>
