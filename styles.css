@@ -351,6 +351,31 @@ a {
     opacity: 0.8;
 }
 
+.hero-cta {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 14px 36px;
+    border: 1px solid rgba(61, 61, 61, 0.3);
+    border-radius: 30px;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.hero-cta:hover {
+    background: var(--color-text);
+    color: var(--color-white);
+    border-color: var(--color-text);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
 .hero-scroll {
     display: inline-flex;
     flex-direction: column;
